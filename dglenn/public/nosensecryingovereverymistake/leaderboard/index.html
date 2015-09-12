@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Final Challenge Scoreboard</title>
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/scoreboard.css">
+  <script src="http://yui.yahooapis.com/3.6.0/build/yui/yui-min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.0.19.min.js"></script>
+
+    <link rel="stylesheet"
+	href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<META HTTP-EQUIV="refresh" CONTENT="100">
+</head>
+
+<body>
+    <script type="text/javascript">
+  var userip;
+</script>
+<script type="text/javascript" src="https://l2.io/ip.js?var=userip"></script>
+<script type="text/javascript">
+</script>
+
+     <script type="text/javascript">
+      var newdate;
+         function myCallback(json) {
+        newdate = JSON.stringify(json.dateString);
+             newdate = newdate.substring(1,newdate.length-10);
+      }
+    </script>
+    <script type="text/javascript" src="http://www.timeapi.org/est/in+one+hour.json?callback=myCallback"></script>
+  <h1>Challenge Scoreboard</h1>
+    <h3>We'd prefer that you only make one submission, however we've made a self-cleaning mechanism that will remove duplicates *eventually*.</h3>
+  <div id="main">
+		<div id="input-wrapper">
+			<input type="text" id="list-input" placeholder="Enter your name">
+			<input type="button" id="list-item-submit" value="Add">
+		</div>
+
+            <table id="headers">
+    	       <tr><th class="first"></th><th class="second">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name</th><th class="third">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time</th></tr>
+            </table>
+
+			<ul id="items"><br>
+				<li id="first-one">Nobody has finished the challenge yet... you're the first!</li>
+			</ul>
+		</div>
+
+	<script id="items-template" type="x/handlebars">
+
+
+    <table id="data">
+    <tr><td class="first"></td>
+    <td class="second"> <li class="list-item">{content}</li></td>
+    <td class="third"><li class="list-item">{created}</li></td>
+    </tr>
+    </table>
+
+	</script>
+
+	<script>
+Parse.initialize("6wHQoH7da9tT7k6RyeDrXZvLNozPfSmJc6tekcNN","WjZbjzNPXyik1eKwCSrvMFsiXgcmUWt0KrChD6Wx");
+        var checka = 0;
+		YUI().use('node', function(Y) {
+			var ListItem,
+			query,
+            noTasksMessage = Y.one('#first-one'),
+			submitBtn = Y.one("#list-item-submit"),
+			ItemList = Y.one('#items'),
+			input = Y.one("#list-input");
+
+
+
+			//Handle Click Event
+
+			submitBtn.on('click', function(e) {
+
+				//Save the current Todo
+				var text = Y.one('#list-input').get('value');
+				var ListItem = Parse.Object.extend("ListItem");
+				var listItem = new ListItem();
+
+
+                listItem.set("IP", userip);
+				listItem.set("content", text);
+                listItem.set("parseDate", newdate);
+
+
+
+                if(text.length > 4){
+				//Once it is saved, show it in the list of todo's.
+				listItem.save(null, {
+
+				  success: function(item) {
+						noTasksMessage.addClass('hidden');
+
+
+
+				    var content = Y.Lang.sub(Y.one('#items-template').getHTML(), {
+							content: item.get('content'),
+							id: item.id,
+                            created: item.get('parseDate')
+						});
+
+						ItemList.append(content);
+						input.set('value', '').focus();location.reload(0);
+
+				  },
+
+				  error: function(gameScore, error) {
+						alert("Error when saving: " + error.code + " " + error.message);
+				  }
+				});
+}
+                else {
+                    alert("Input must be greater than four characters.");
+                }
+            });
+
+
+
+
+
+
+			//Get 10 most recent incomplete Todos.
+			ListItem = Parse.Object.extend("ListItem");
+
+			query = new Parse.Query(ListItem);
+
+
+			query.limit = 10;
+			query.ascending('createdAt');
+			query.find({
+			  success: function(results) {
+					if (results.length > 0) {
+						noTasksMessage.addClass('hidden');
+					}
+
+
+					//Append each of the incomplete tasks to the Incomplete List
+					Y.Array.each(results, function(val, i, arr) {
+                        var content = Y.Lang.sub(Y.one('#items-template').getHTML(), {
+							content: val.get('content'),
+							id: val.id,
+                            created: val.get('parseDate')
+						});
+						ItemList.append(content);
+
+					});
+
+			  },
+			  error: function(error) {
+			    alert("Error when retrieving user: " + error.code + " " + error.message);
+			  }
+			});
+                                            var q = new Parse.Query(ListItem);
+            q.equalTo("IP", userip);
+
+             q.find({
+                success: function(res) {
+                    if(res.length>0){
+                        var count = 0;
+
+                    for(j = res.length-1; j >0; j--){
+                        if(res[j].get("IP") == userip){
+                           res[j].destroy();
+
+                        }
+                        }
+
+                    }
+
+              },
+
+  error: function(error) {}
+
+});
+
+		});
+
+
+	</script>
+
+</body>
+
+</html>
