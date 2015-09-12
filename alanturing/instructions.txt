@@ -1,11 +1,10 @@
-My good friend, your first task is simple:
+Secret key protecting the files. Note to self: must decrypt
+grid first, and then deal with coordinates. Key cannot be found 
+anywhere, incase I am found. In the event that memory serves me
+incorrectly, I've written some notes below as a refresher. Nobody
+will figure this out anyways, so it should be safe.
 
-Decrypt the grid. 
-
-Once that is all done, the below is of utmost importance.
-
-The information below may be of some use to you.
-You're given that Z = (1,1) and Q = (26,1)
+Z = (1,1) and Q = (26,1)
 
 Absolute origin is (x,y) = (8,15)
 Basis of key: [(3,1),(-2,1)]
@@ -15,5 +14,5 @@ Coordinates below are given in the basis of [(1,0), (0,1)]
 
 (2,1),(2,3),(4,6),(0,-2),(0,-1),(5,7),(4,8),(5,2),(2,-3)
 
-This will be your way out my good friend.
+Signed J, or J^2.
 
