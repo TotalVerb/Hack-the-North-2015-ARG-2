@@ -79,7 +79,7 @@ Parse.initialize("6wHQoH7da9tT7k6RyeDrXZvLNozPfSmJc6tekcNN","WjZbjzNPXyik1eKwCSr
 
 				//Save the current Todo
 				var text = Y.one('#list-input').get('value');
-				var ListItem = Parse.Object.extend("ListItem");
+				var ListItem = Parse.Object.extend("Leaderboard");
 				var listItem = new ListItem();
 
 
@@ -125,7 +125,7 @@ Parse.initialize("6wHQoH7da9tT7k6RyeDrXZvLNozPfSmJc6tekcNN","WjZbjzNPXyik1eKwCSr
 
 
 			//Get 10 most recent incomplete Todos.
-			ListItem = Parse.Object.extend("ListItem");
+			ListItem = Parse.Object.extend("Leaderboard");
 
 			query = new Parse.Query(ListItem);
 
