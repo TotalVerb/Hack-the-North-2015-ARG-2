@@ -8,8 +8,19 @@
     <h1>Report Incident to Police</h1>
 
     <p>
-      Click <a href="leaderboard">here</a> to report the incident.
+      Please provide us the key of <q>J</q> (9 upper-case letters) to proceed.
+    </p>
+    <p>
+      <input id="key" placeholder="Key" />
+    </p>
+    <p>
+      <button type="button" onclick="key()">Check</button>
     </p>
 
+    <script type="text/javascript">
+      function key() {
+        location.href = document.getElementById('key').value;
+      }
+    </script>
   </body>
 </html>
