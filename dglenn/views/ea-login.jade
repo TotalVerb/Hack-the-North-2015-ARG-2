@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= title
+  form(action="/", method="post")
+    p
+      input(name="username", type="text")
+    p
+      input(name="password", type="password")
+    p
+      button(type="submit") Submit

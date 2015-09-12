@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1#title= title
+  if ceo
+    p#ceo.
+      Welcome back, Bertrand. Please access your files. The encryption password
+      is <q>huge-success</q>.
+    p
+      a(href="/~bdupont/files.zip") Files
+  else if master
+    p.
+      Welcome back, Don. As webmaster you are allowed access to all the
+      usernames and passwords.
+    p.
+      CEO Bertrand Dupont (bdupont): password <q>solongandthanksforallthefish</q>
+    p.
+      CSO Wesley Scott (wscott): password <q>stillalive</q>
+  else
+    p.
+      Hi, Welcome to the Employee Area. Due to unforeseen circumstances, all
+      functionality of this area has been removed. Please read this important
+      <a href="mail/in.html">notice</a>.
+    p.
+      I'm Don Glenn, your webmaster. If you have any questions please email me.
+      My email address is dglenn[@]northbank.net. Also visit my personal site,
+      <a href="/~dglenn">here</a> Thank you!!
